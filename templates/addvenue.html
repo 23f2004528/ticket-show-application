@@ -1,0 +1,33 @@
+{%extends "admin_layout.html"%}<!--Inheritence all nav features-->>
+{%block content%}
+            <h2>
+              <center>Add a Venue</center>
+            </h2>
+            <form action="#" method="POST">
+            <div class="input_form">
+                
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Name of Venue</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="theatre name">
+                      </div>
+                      <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <textarea class="form-control" name="location" id="location" rows="3" placeholder="theatre-location"></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="pincode" class="form-label">Pincode</label>
+                        <input type="number" name="pincode" class="form-control" id="pincode">
+                      </div>
+                      <div class="mb-3">
+                        <label for="capacity" class="form-label">Capacity</label>
+                        <input type="number" name="capacity" class="form-control" id="capacity">
+                      </div>
+                    <br>
+                    <br>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="/admin/{{name}}" type="button" class="btn btn-primary">Cancel</a>
+                    </div>
+                    </div>
+                  </form>
+ {%endblock%}

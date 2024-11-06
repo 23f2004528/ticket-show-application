@@ -1,59 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles/main.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> <!--for using bootstrap class-->
-    <title>Admin Dashboard</title>
-</head>
-<body>
-    <div class="my_container">
-        <h1><center> Welcome to Cinematic world</h1></center>
-        <div class="my_panel">
-            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: bisque;">
-                <div class="container-fluid">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                      <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Summary</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Logout</a>
-                      </li>
-                    </ul>
-                    <span class="navbar-text">
-                      Welcome to Admin Dashboard
-                    </span>
-                </div>
-            </nav>
+{%extends "admin_layout.html"%}<!--Inheritence all nav features-->>
+{%block content%}
             <div class="container">
+              {%if theatres%}
                 <div class="row">
+                  {%for theatre in theatres%}
                   <div class="col">
                     <!--Card1 here-->
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
-                          <h5 class="card-title">Venue 1</h5>
-                          <h6 class="card-subtitle mb-2 text-muted">Cinepolis</h6>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <h5 class="card-title">{{theatre.name}}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">{{theatre.location}}</h6>
+                          {%if theatre.shows%}
+                          <table>
+                            <tr><th>ID</th><th>Name</th><th>Date/Time</th></tr>
+                            {%for show in theatre.shows%}
+                            <tr><td>{{show.id}}</td><td>{{show.name}}</td><td>{{show.date_time}}</td></tr>
+                            {%endfor%}
+                          </table>
+                          {%else%}
+                          <p>No shows here</p>
+                          {%endif%}
                           <button type="button" class="btn btn-outline-primary">+Add Show</button>
                         </div>
                       </div>
                   </div>
-                  <div class="col">
-                    <!--Card2 here-->
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                          <h5 class="card-title">Venue 2</h5>
-                          <h6 class="card-subtitle mb-2 text-muted">PVR</h6>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <button type="button" class="btn btn-outline-primary">+Add Show</button>
-                        </div>
-                      </div>
-                  </div>
+                  {%endfor%}
                 </div>
+                {%else%}
+                  <h3 class="center">No venues are available</h3>
+                {%endif%}
               </div>
-              </div>
-            <center><button type="button" class="btn btn-primary">+Add Venue</button></center>
-        </div>
-</body>
-</html>
+              <center><a href="/venue/{{name}}" type="button" class="btn btn-primary">+Add Venue</a></center>
+              
+{%endblock%}
+
+              
