@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db=SQLAlchemy()
 
+
 #First entity
 class User_Info(db.Model):
     __tablename__="user_info"
@@ -15,6 +16,7 @@ class User_Info(db.Model):
     pincode=db.Column(db.Integer,nullable=False)
     ticket=db.relationship("Ticket",cascade="all, delete",backref="user_info",lazy=True)#user can access all of his ticketes
     
+    
 #Entity theatre
 class Theatre(db.Model):
     __tablename__="theatre"
@@ -25,6 +27,7 @@ class Theatre(db.Model):
     pincode=db.Column(db.Integer,nullable=False)
     shows=db.relationship("Show",cascade="all, delete",backref="theatre",lazy=True)#theatre can access all of his shows
     
+#Entity show  
 class Show(db.Model):
     __tablename__="show"
     id=db.Column(db.Integer,primary_key=True)
@@ -36,6 +39,7 @@ class Show(db.Model):
     theatre_id=db.Column(db.Integer,db.ForeignKey("theatre.id"),nullable=False)
     tickets=db.relationship("Ticket",cascade="all, delete",backref="show",lazy=True)#user can access all of his ticketes
     
+#Entity Ticket   
 class Ticket(db.Model):
     __tablename__="ticket"
     id=db.Column(db.Integer,primary_key=True)

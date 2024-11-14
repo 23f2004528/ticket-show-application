@@ -1,0 +1,36 @@
+{%extends "admin_layout.html"%}<!--Inheritence all nav features-->>
+{%block content%}
+            <h2>
+              <center>Add Show</center>
+            </h2>
+            <form action="#" method="POST">
+            <div class="input_form">
+                      <div class="mb-3">
+                        <label for="v_id" class="form-label">Venue ID</label>
+                        <input type="number" name="v_id" class="form-control" id="v_id" value="{{venue_id}}" readonly>
+                      </div>
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Name of Show</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Movie Name">
+                      </div>
+                      <div class="mb-3">
+                        <label for="tags" class="form-label">Tags</label>
+                        <textarea class="form-control" name="tags" id="tags" rows="3" placeholder="gnere"></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="tkt_price" class="form-label">Ticket Price</label>
+                        <input type="number" name="tkt_price" class="form-control" id="tkt_price",placeholder="0">
+                      </div>
+                      <div class="mb-3">
+                        <label for="dt_time" class="form-label">Date/Time</label>
+                        <input type="datetime-local" name="dt_time" class="form-control" id="dt_time",placeholder="0">
+                      </div>
+                    <br>
+                    <br>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="/admin/{{name}}" type="button" class="btn btn-primary">Cancel</a>
+                    </div>
+                    </div>
+                  </form>
+ {%endblock%}

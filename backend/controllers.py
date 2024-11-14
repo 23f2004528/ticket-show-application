@@ -2,15 +2,13 @@
 from flask import Flask,render_template,request,url_for,redirect
 from .models import *
 from flask import current_app as app
+from datetime import date, datetime
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
-@app.route("/admin/<name>")
-def admin(name):
-    theatres=get_theatres()
-    return render_template("admin_dashboard.html",name=name,theatres=theatres)
+
 
 @app.route("/user/<name>")
 def user(name):
@@ -48,9 +46,14 @@ def signup():
         db.session.commit()
         return render_template("login.html",msg="Successfully registered")
     return render_template("signup.html")
+
+@app.route("/admin/<name>")
+def admin(name):
+    theatres=get_theatres()
+    return render_template("admin_dashboard.html",name=name,theatres=theatres)
 #for venue making
-@app.route("/venue/<name>",methods=["GET","POST"])#<> is parameter (from frontend to backend)
-def addvenue(name): #() for parameter
+@app.route("/venue/<name>",methods=["POST","GET"])#<> is parameter (from frontend to backend)
+def add_venue(name): #() for parameter
     if request.method=="POST":
         vname=request.form.get("name")
         loc=request.form.get("location")
@@ -61,6 +64,20 @@ def addvenue(name): #() for parameter
         db.session.commit()
         return redirect(url_for("admin",name=name))
     return render_template("addvenue.html",name=name)
+#for show purpose
+@app.route("/show/<venue_id>/<name>",methods=["POST","GET"])#<> is parameter (from frontend to backend)
+def add_show(venue_id,name): #() for parameter
+    if request.method=="POST":
+        sname=request.form.get("name")
+        tags=request.form.get("tags")
+        tkt_price=request.form.get("tkt_price")
+        date_time=request.form.get("dt_time") #string type of data and processing date/time
+        dt_time=datetime.strptime(date_time,"%Y-%m-%dT%H:%M")
+        new_show=Show(name=sname,tags=tags,tkt_price=tkt_price,date_time=dt_time,theatre_id=venue_id)
+        db.session.add(new_show)
+        db.session.commit()
+        return redirect(url_for("admin",name=name))
+    return render_template("add_show.html",venue_id=venue_id,name=name)
 
 def get_theatres():
     theatres=Theatre.query.all()
