@@ -78,8 +78,30 @@ def add_show(venue_id,name): #() for parameter
         db.session.commit()
         return redirect(url_for("admin",name=name))
     return render_template("add_show.html",venue_id=venue_id,name=name)
+@app.route("/search/<name>",methods=['GET','POST'])
+def search(name):
+    if request.method=="POST":
+        search_txt=request.form.get("search_txt")
+        by_venue=search_by_venue(search_txt)
+        by_location=search_by_location(search_txt)
+        if by_venue:
+            return render_template("admin_dashboard.html",name=name, theatres=by_venue)
+        elif by_location:
+            return render_template("admin_dashboard.html",name=name,theatres=by_location)
+    return redirect(url_for("admin_dashboard",name=name))
+
+
 
 def get_theatres():
     theatres=Theatre.query.all()
     return theatres
+
+def search_by_venue(search_txt):
+    theatres=Theatre.query.filter(Theatre.name.ilike(f"%{search_txt}%")).all()
+    return theatres
+
+def search_by_location(search_txt):
+    theatres=Theatre.query.filter(Theatre.location.ilike(f"%{search_txt}%")).all()
+    return theatres
+
 
